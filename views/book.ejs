@@ -1,0 +1,10 @@
+<li>
+    <h2><%= book.book_name %></h2>
+    <h3><%= book.book_description %></h3>
+    <ul>
+        <% book.genres.forEach((genre) => { %>
+            <li><%= genre %></li>
+        <% }); %>
+    </ul>
+    <h3><%= book.author_first_name %>  <%= book.author_last_name %></h3>
+</li>

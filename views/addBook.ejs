@@ -1,0 +1,37 @@
+<html lang="en">
+<head>
+    <title>Book Inventory</title>
+</head>
+<body>
+<%- include("navbar") %>
+<form action="/add" method="post">
+    <label for="bookName">Book name</label>
+    <input type="text" name="bookName" id="bookName" required>
+    <label for="description">Book description</label>
+    <input type="text" id="description" name="description">
+    <label for="bookImg">Book image</label>
+    <input type="file" id="bookImg" name="bookImg"  alt="book image">
+    <label for="publicationDate">Publication date</label>
+    <input type="date" id="publicationDate" name="publicationDate">
+    <label for="price">Price:</label>
+    <input type="number" id="price" name="price">
+    <label for="author">Author:</label>
+    <select name="author" id="author">
+        <% authors.forEach(author => { %>
+            <option value="<%= author.author_id %>">
+                <%= author.author_first_name %> <%= author.author_last_name %>
+            </option>
+        <% }) %>
+    </select>
+    <label for="genres">Genres:</label>
+    <select id="genres" name="genres[]" multiple>
+        <% genres.forEach(genre => { %>
+            <option value="<%= genre.genre_id %>">
+                <%= genre.genre_name %>
+            </option>
+        <% }) %>
+    </select>
+    <button type="submit"> Submit</button>
+</form>
+</body>
+</html>

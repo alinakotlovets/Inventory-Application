@@ -1,0 +1,13 @@
+<html>
+<head>
+    <title>Book Inventory</title>
+</head>
+<body>
+<%- include("navbar") %>
+<ul>
+    <% books.forEach((book) => { %>
+        <%- include('book', {book: book}); %>
+    <% }); %>
+</ul>
+</body>
+</html>

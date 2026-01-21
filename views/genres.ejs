@@ -1,0 +1,13 @@
+<html>
+<head>
+    <title>Book Inventory</title>
+</head>
+<body>
+<%- include("navbar") %>
+<ul>
+    <% genres.forEach((genre) => { %>
+        <li><%= genre.genre_name %></li>
+    <% }); %>
+</ul>
+</body>
+</html>

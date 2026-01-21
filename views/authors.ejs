@@ -1,0 +1,13 @@
+<html>
+<head>
+    <title>Book Inventory</title>
+</head>
+<body>
+<%- include("navbar") %>
+<ul>
+    <% authors.forEach((author) => { %>
+       <li> <%= author.author_first_name %>  <%= author.author_last_name %>  </li>
+    <% }); %>
+</ul>
+</body>
+</html>

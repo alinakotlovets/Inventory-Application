@@ -1,0 +1,16 @@
+{
+  "name": "inventory-app",
+  "version": "1.0.0",
+  "description": "inventory app project for nodejs course",
+  "type": "module",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "dotenv": "^17.2.3",
+    "ejs": "^4.0.1",
+    "express": "^5.2.1",
+    "pg": "^8.17.2"
+  }
+}
