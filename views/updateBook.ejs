@@ -4,21 +4,25 @@
 </head>
 <body>
 <%- include("navbar") %>
-<form action="/add" method="post" enctype="multipart/form-data">
+<form action="/update/<%= bookId %>" method="post" enctype="multipart/form-data">
     <label for="bookName">Book name</label>
-    <input type="text" name="bookName" id="bookName" required>
+    <input type="text" name="bookName" value="<%= bookName %>" id="bookName" required>
     <label for="description">Book description</label>
-    <input type="text" id="description" name="description">
+    <input type="text" id="description" value="<%= bookDescription %>" name="description">
+    <% if(bookImg) { %>
+        <img src="<%= bookImg %>" alt="<%= bookName %>" style="max-width:200px;">
+    <% } %>
     <label for="bookImg">Book image</label>
-    <input type="file" id="bookImg" name="bookImg"  alt="book image">
+    <input type="file" id="bookImg" name="bookImg" alt="book image">
     <label for="publicationDate">Publication date</label>
-    <input type="date" id="publicationDate" name="publicationDate">
+    <input type="date" id="publicationDate" value="<%= bookPublication %>" name="publicationDate">
     <label for="price">Price:</label>
-    <input type="number" id="price" name="price">
+    <input type="number" id="price" value="<%= bookPrice%>" name="price">
     <label for="author">Author:</label>
     <select name="author" id="author">
         <% authors.forEach(author => { %>
-            <option value="<%= author.author_id %>">
+            <option value="<%= author.author_id %>"
+                    <%= author.author_id === bookAuthorId ? 'selected' : '' %>>
                 <%= author.author_first_name %> <%= author.author_last_name %>
             </option>
         <% }) %>
@@ -26,7 +30,8 @@
     <label for="genres">Genres:</label>
     <select id="genres" name="genres[]" multiple required>
         <% genres.forEach(genre => { %>
-            <option value="<%= genre.genre_id %>">
+            <option value="<%= genre.genre_id %>"
+                    <%= bookGenreIds.includes(genre.genre_id) ? 'selected' : '' %>>
                 <%= genre.genre_name %>
             </option>
         <% }) %>

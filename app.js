@@ -13,6 +13,7 @@ const app = express();
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: true }));
+app.use('/images', express.static('public/images'));
 app.use("/", booksRouter);
 app.use("/genres", genresRouter);
 app.use("/authors", authorsRouter);

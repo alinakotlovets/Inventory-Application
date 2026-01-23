@@ -1,0 +1,15 @@
+<html lang="en">
+<head>
+    <title>Book Inventory</title>
+</head>
+<body>
+<%- include("navbar") %>
+<form action="/authors/update/<%= authorId %>" method="post">
+    <label for="firstName">First name</label>
+    <input type="text" name="firstName" value="<%= authorFirstName %>" id="firstName" required>
+    <label for="lastName">First name</label>
+    <input type="text" id="lastName" value="<%= authorLastName %>" name="lastName" required>
+    <button type="submit">Submit</button>
+</form>
+</body>
+</html>
