@@ -4,11 +4,11 @@
     <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
-<%- include("navbar") %>
-<%- include("formConfirmUpdateAndDelete") %>
+<%- include("component/navbar.ejs") %>
+<%- include("component/formConfirmUpdateAndDelete.ejs") %>
 <ul id="books-list">
     <% books.forEach((book) => { %>
-        <%- include('book', {book: book}); %>
+        <%- include('component/book.ejs', {book: book}); %>
     <% }); %>
 </ul>
 </body>

@@ -6,6 +6,18 @@ import {
     deleteAuthorFromBb
 } from "../db/queries.js";
 import 'dotenv/config';
+import {body, matchedData, validationResult} from "express-validator";
+
+export const authorValidation = [
+    body("firstName")
+        .trim()
+        .isAlpha().withMessage("first name must only contains letter of en alphabet")
+        .isLength({min: 2}).withMessage("first name must have at least 2 latter"),
+    body("lastName")
+        .trim()
+        .isAlpha().withMessage("last name must only contains letter of en alphabet")
+        .isLength({min: 2}).withMessage("last name must have at least 2 latter")
+];
 
 export async function getAllAuthors(req, res) {
     const authors = await getAllAuthorsFromBd();
@@ -16,11 +28,24 @@ export async function getAllAuthors(req, res) {
 }
 
 export function getAddAuthor(req, res) {
-    res.render("addAuthor");
+    res.render("addAuthor", {
+        errors: [],
+        lastNameInput: "",
+        firstNameInput: "",
+    });
 }
 
 export async function addAuthor(req, res) {
-    const {firstName, lastName} = req.body;
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).render("addAuthor", {
+            errors: errors.array(),
+            lastNameInput: req.body.lastName,
+            firstNameInput: req.body.firstName
+        })
+    }
+
+    const {firstName, lastName} = matchedData(req);
     await addAuthorsToBd(firstName, lastName);
     res.redirect("/authors");
 }
@@ -64,6 +89,19 @@ export async function updateAuthor(req, res) {
 }
 
 
+export async function postAuthorValidation(req, res) {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({
+            errors: errors.array()
+        });
+    }
+    return res.status(200).json({
+        errors: [],
+    })
+}
+
+
 export async function deleteAuthor(req, res) {
     const {authorId} = req.params;
     const {confirmPassword} = req.body;
@@ -81,6 +119,6 @@ export async function deleteAuthor(req, res) {
 
     return res.status(200).json({
         message: "Author deleted",
-        redirectTo: "/genres"
+        redirectTo: "/authors"
     });
 }

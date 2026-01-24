@@ -4,8 +4,8 @@
     <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
-<%- include("navbar") %>
-<%- include("formConfirmUpdateAndDelete") %>
+<%- include("component/navbar.ejs") %>
+<%- include("component/formConfirmUpdateAndDelete.ejs") %>
 <form id="editBookForm">
     <label for="bookName">Book name</label>
     <input type="text" name="bookName" value="<%= bookName %>" id="bookName" required>
@@ -38,7 +38,8 @@
             </option>
         <% }) %>
     </select>
-    <button id="edit-book-submit" data-genre-id="<%= bookId %>" type="button"> Submit</button>
+    <p class="validation-error-messages"></p>
+    <button id="edit-book-submit" data-book-id="<%= bookId %>" type="button">Submit</button>
 </form>
 </body>
 <script src="/js/confirmForm.js"></script>

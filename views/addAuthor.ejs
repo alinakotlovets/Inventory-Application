@@ -3,12 +3,13 @@
     <title>Book Inventory</title>
 </head>
 <body>
-<%- include("navbar") %>
+<%- include("component/navbar.ejs") %>
 <form action="/authors/add" method="post">
     <label for="firstName">First name</label>
-    <input type="text" name="firstName" id="firstName" required>
-    <label for="lastName">First name</label>
-    <input type="text" id="lastName" name="lastName" required>
+    <input type="text" name="firstName" value="<%= firstNameInput %>" id="firstName" required>
+    <label for="lastName">Last name</label>
+    <input type="text" id="lastName" value="<%= lastNameInput %>" name="lastName" required>
+    <%- include("component/errors.ejs") %>
     <button type="submit">Submit</button>
 </form>
 </body>

@@ -4,11 +4,12 @@
     <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
-<%- include("navbar") %>
-<%- include("formConfirmUpdateAndDelete") %>
+<%- include("component/navbar.ejs") %>
+<%- include("component/formConfirmUpdateAndDelete.ejs") %>
 <form>
     <label for="genreName">Genre</label>
     <input type="text" name="genreName" value="<%= genreName %>" id="genreName" required>
+    <p class="validation-error-messages"></p>
     <button type="button" id="edit-genre-submit" data-genre-id="<%= genreId %>">Submit</button>
 </form>
 </body>

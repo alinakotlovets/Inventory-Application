@@ -4,8 +4,8 @@
     <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
-<%- include("navbar") %>
-<%- include("formConfirmUpdateAndDelete") %>
+<%- include("component/navbar.ejs") %>
+<%- include("component/formConfirmUpdateAndDelete.ejs") %>
 <ul id="authors-list">
     <% authors.forEach((author) => { %>
         <li><h2><%= author.author_first_name %> <%= author.author_last_name %></h2>

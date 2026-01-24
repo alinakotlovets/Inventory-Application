@@ -8,6 +8,37 @@ import {
     updateBookGenreInDb,
     deleteBookFromDb
 } from "../db/queries.js";
+import {body, validationResult, matchedData} from "express-validator";
+
+export const bookValidation = [
+    body("bookName")
+        .trim()
+        .notEmpty().withMessage("Book name is required")
+        .isLength({min: 1}).withMessage("Book name must have at least 1 letter"),
+
+    body("description")
+        .optional({checkFalsy: true})
+        .isLength({max: 1000}).withMessage("Description can have max 1000 characters"),
+
+    body("publicationDate")
+        .optional({checkFalsy: true})
+        .isISO8601().withMessage("Publication date must be a valid date"),
+
+    body("price")
+        .optional({checkFalsy: true})
+        .isFloat({min: 1}).withMessage("Price must be a positive number and more then 0"),
+
+    body("author")
+        .notEmpty().withMessage("Author is required")
+        .bail(),
+
+    body("genres")
+        .custom(value => {
+            if (!value) return false;
+            const arr = Array.isArray(value) ? value : [value];
+            return arr.every(v => !isNaN(Number(v)));
+        }).withMessage("Select at least one genre")
+];
 
 export async function getAllBooks(req, res) {
     const data = await getAllBooksFromBd();
@@ -40,14 +71,40 @@ export async function getAddBook(req, res) {
     if (!genres) {
         throw new Error("not found genres");
     }
-    res.render("addBook", {authors: authors, genres: genres})
+    res.render("addBook", {
+        authors: authors,
+        genres: genres,
+        errors: [],
+        bookName: "",
+        description: "",
+        publicationDate: "",
+        price: "",
+        author: "",
+        genresSelected: ""
+    })
 }
 
 export async function addBook(req, res) {
-    let {bookName, description, publicationDate, price, author, genres} = req.body;
+    const errors = validationResult(req);
+    const authors = await getAllAuthorsFromBd();
+    const genresBd = await getAllGenresFromBd();
+    if (!errors.isEmpty()) {
+        return res.status(400).render("addBook", {
+            authors,
+            genres: genresBd,
+            errors: errors.array(),
+            bookName: req.body.bookName,
+            description: req.body.description,
+            publicationDate: req.body.publicationDate,
+            price: req.body.price,
+            author: req.body.author,
+            genresSelected: req.body.genres
+        });
+    }
+    let {bookName, description, publicationDate, price, author, genres} = matchedData(req);
     description = description === "" ? null : description;
     publicationDate = publicationDate === "" ? null : publicationDate;
-    price = price === "" ? null : Number(price);
+    price = price == null || price === "" ? null : Number(price);
     author = Number(author);
     const bookImg = req.file ? '/images/books/' + req.file.filename : null;
     await addBookToBd(bookName, description, bookImg, publicationDate, price, author, genres);
@@ -110,16 +167,15 @@ export async function updateBook(req, res) {
     return res.status(200).json({redirectTo: "/"});
 }
 
-export async function confirmUpdateBook(req, res) {
-    const {bookId} = req.params;
-    const {confirmPassword} = req.body;
-
-    if (confirmPassword.trim() !== process.env.ADMIN_PASSWORD) {
-        return res.status(401).json({message: "Password incorrect"});
+export async function postBookValidation(req, res) {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({
+            errors: errors.array()
+        });
     }
-
     return res.status(200).json({
-        redirectTo: `/update/${bookId}`
+        errors: []
     });
 }
 

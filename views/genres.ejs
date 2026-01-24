@@ -4,8 +4,8 @@
     <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
-<%- include("navbar") %>
-<%- include("formConfirmUpdateAndDelete") %>
+<%- include("component/navbar.ejs") %>
+<%- include("component/formConfirmUpdateAndDelete.ejs") %>
 <ul id="genres-list">
     <% genres.forEach((genre) => { %>
         <li>

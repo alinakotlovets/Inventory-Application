@@ -39,28 +39,52 @@ if (genresList) {
 
 
 if (submitEditGenreBtn) {
-    submitEditGenreBtn.addEventListener("click", (e) => {
+    submitEditGenreBtn.addEventListener("click", async (e) => {
         e.preventDefault();
         const genreId = e.target.dataset.genreId;
-        pendingFormData = {
-            genreName: document.getElementById("genreName").value
-        };
+        const genreName = document.getElementById("genreName").value;
+        const res = await fetch(`/genres/update/${genreId}/validate`, {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({genreName})
+        });
+        const data = await res.json();
+
+        if (!res.ok) {
+            document.querySelector(".validation-error-messages").textContent = data.errors.map(e => e.msg).join(", ");
+            return;
+        }
+        pendingFormData = {genreName};
         confirmFormLabel.innerHTML = 'Write password for confirm that you have permission for updating content.';
-        confirmForm.action = `/genres/update/${genreId}/`;
+        confirmForm.action = `/genres/update/${genreId}`;
+        document.querySelector(".validation-error-messages").textContent = "";
         confirmForm.style.display = "block";
-    })
+    });
 }
 
 if (submitEditAuthorBtn) {
-    submitEditAuthorBtn.addEventListener("click", (e) => {
+    submitEditAuthorBtn.addEventListener("click", async (e) => {
         e.preventDefault();
         const authorId = e.target.dataset.authorId;
         pendingFormData = {
             firstName: document.getElementById("firstName").value,
             lastName: document.getElementById("lastName").value,
         };
+        const res = await fetch(`/authors/update/${authorId}/validate`, {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify(pendingFormData)
+        });
+
+        const data = await res.json();
+
+        if (!res.ok) {
+            document.querySelector(".validation-error-messages").textContent = data.errors.map(e => e.msg).join(", ");
+            return;
+        }
         confirmFormLabel.innerHTML = 'Write password for confirm that you have permission for updating content.';
         confirmForm.action = `/authors/update/${authorId}/`;
+        document.querySelector(".validation-error-messages").textContent = "";
         confirmForm.style.display = "block";
     })
 }
@@ -80,27 +104,32 @@ if (booksList) {
 
 
 if (submitEditBookBtn && editBookForm) {
-    submitEditBookBtn.addEventListener("click", (e) => {
+    submitEditBookBtn.addEventListener("click", async (e) => {
         e.preventDefault();
 
-        const bookId = e.target.dataset.genreId;
+        const bookId = e.target.dataset.bookId;
         const formData = new FormData(editBookForm);
-        const data = {};
 
-        formData.forEach((value, key) => {
-            if (key === "genres[]") {
-                if (!data.genres) data.genres = [];
-                data.genres.push(value);
-            }
+        const res = await fetch(`/update/${bookId}/validate`, {
+            method: "POST",
+            body: formData
         });
+
+        const data = await res.json();
+
+        if (!res.ok) {
+            document.querySelector(".validation-error-messages").textContent =
+                data.errors.map(e => e.msg).join(", ");
+            return;
+        }
 
         pendingFormData = formData;
         confirmFormLabel.innerHTML = "Write password for confirm that you have permission for updating content.";
         confirmForm.action = `/update/${bookId}`;
+        document.querySelector(".validation-error-messages").textContent = "";
         confirmForm.style.display = "block";
     });
 }
-
 
 confirmFormCancelBtn.addEventListener("click", (e) => {
     e.preventDefault();

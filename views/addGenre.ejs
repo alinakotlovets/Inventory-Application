@@ -3,10 +3,11 @@
     <title>Book Inventory</title>
 </head>
 <body>
-<%- include("navbar") %>
+<%- include("component/navbar.ejs") %>
 <form action="/genres/add" method="post">
-    <label for="genre">Genre</label>
-    <input type="text" name="genre" id="genre" required>
+    <label for="genreName">Genre</label>
+    <%- include("component/errors.ejs") %>
+    <input type="text" name="genreName" id="genreName" value="<%= oldInput %>" required>
     <button type="submit">Submit</button>
 </form>
 </body>

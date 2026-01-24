@@ -5,8 +5,8 @@ import {
     addBook,
     getUpdateBook,
     updateBook,
-    deleteBook,
-    confirmUpdateBook
+    deleteBook, bookValidation,
+    postBookValidation
 } from "../controllers/bookControllers.js"
 import {upload} from "../middleware/multer.js";
 
@@ -14,10 +14,12 @@ const booksRouter = Router();
 
 booksRouter.get("/", getAllBooks);
 booksRouter.get("/add", getAddBook);
-booksRouter.post("/add", upload.single('bookImg'), addBook);
+booksRouter.post("/add", upload.single('bookImg'), bookValidation, addBook);
+booksRouter.post("/update/:bookId/validate", upload.single("bookImg"),
+    bookValidation,
+    postBookValidation);
+booksRouter.post("/update/:bookId", upload.single("bookImg"), updateBook);
 booksRouter.get("/update/:bookId", getUpdateBook);
-booksRouter.post("/update/:bookId/confirm", confirmUpdateBook)
-booksRouter.post("/update/:bookId", upload.single('bookImg'), updateBook);
 booksRouter.post("/delete/:bookId", deleteBook);
 
 export default booksRouter;
