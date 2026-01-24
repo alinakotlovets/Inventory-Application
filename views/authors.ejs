@@ -1,15 +1,20 @@
 <html>
 <head>
     <title>Book Inventory</title>
+    <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
 <%- include("navbar") %>
-<ul>
+<%- include("formConfirmUpdateAndDelete") %>
+<ul id="authors-list">
     <% authors.forEach((author) => { %>
-       <li> <%= author.author_first_name %>  <%= author.author_last_name %> </li>
-        <a href="/authors/update/<%= author.author_id %>">Update</a>
-        <a href="/authors/delete/<%= author.author_id%>">Delete</a>
-    <% }); %>
+        <li><h2><%= author.author_first_name %> <%= author.author_last_name %></h2>
+            <a href="/authors/update/<%= author.author_id %>">Update</a>
+            <button class="delete-author-btn" data-author-id="<%= author.author_id %>">Delete</button>
+        </li>
+    <% }) %>
 </ul>
+
 </body>
+<script src="/js/confirmForm.js"></script>
 </html>

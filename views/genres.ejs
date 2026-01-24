@@ -1,15 +1,20 @@
 <html>
 <head>
     <title>Book Inventory</title>
+    <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
 <%- include("navbar") %>
-<ul>
+<%- include("formConfirmUpdateAndDelete") %>
+<ul id="genres-list">
     <% genres.forEach((genre) => { %>
-        <li><%= genre.genre_name %></li>
-        <a href="/genres/update/<%= genre.genre_id%>">Update</a>
-        <a href="/genres/delete/<%= genre.genre_id%>">Delete</a>
+        <li>
+            <h2><%= genre.genre_name %></h2>
+            <a href="/genres/update/<%= genre.genre_id %>">Update</a>
+            <button class="delete-genre-btn" data-genre-id="<%= genre.genre_id %>">Delete</button>
+        </li>
     <% }); %>
 </ul>
 </body>
+<script src="/js/confirmForm.js"></script>
 </html>

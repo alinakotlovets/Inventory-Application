@@ -1,11 +1,11 @@
 <li>
-    <% if(book.book_img) {%>
-    <img src="<%=book.book_img%>" alt="<%= book.book_name %> image">
+    <% if(book.book_img) { %>
+        <img src="<%= book.book_img %>" alt="<%= book.book_name %> image">
     <% } %>
     <h2><%= book.book_name %></h2>
     <h3><%= book.book_description %></h3>
-    <% if(book.publication_date) {%>
-    <h4> <%= book.formattedDate %> </h4>
+    <% if(book.publication_date) { %>
+        <h4> <%= book.formattedDate %> </h4>
     <% } %>
     <ul>
         <% book.genres.forEach((genre) => { %>
@@ -13,9 +13,10 @@
         <% }); %>
     </ul>
     <h3><%= book.author_first_name %>  <%= book.author_last_name %></h3>
-    <% if(book.price) {%>
+    <% if(book.price) { %>
         <h2> <%= book.price %>$ </h2>
     <% } %>
     <a href="/update/<%= book.book_id %>">Update</a>
-    <a href="/delete/<%= book.book_id %>">Delete</a>
+    <button class="delete-book-btn" data-book-id="<%= book.book_id %>">Delete</button>
+    <button class="update-book-btn" data-book-id="<%= book.book_id %>">Update</button>
 </li>

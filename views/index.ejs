@@ -1,13 +1,16 @@
 <html>
 <head>
     <title>Book Inventory</title>
+    <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
 <%- include("navbar") %>
-<ul>
+<%- include("formConfirmUpdateAndDelete") %>
+<ul id="books-list">
     <% books.forEach((book) => { %>
         <%- include('book', {book: book}); %>
     <% }); %>
 </ul>
 </body>
+<script src="/js/confirmForm.js"></script>
 </html>

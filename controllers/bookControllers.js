@@ -87,10 +87,15 @@ export async function getUpdateBook(req, res) {
     });
 
 }
+
 export async function updateBook(req, res) {
     const {bookId} = req.params;
 
-    let {bookName, description, publicationDate, price, author, genres} = req.body;
+    let {confirmPassword, bookName, description, publicationDate, price, author, genres} = req.body;
+    if (confirmPassword.trim() !== process.env.ADMIN_PASSWORD) {
+        return res.status(401).json({message: "Password incorrect"});
+    }
+
     const book = await getBookDataById(bookId);
     let bookImg = req.file ? '/images/books/' + req.file.filename : (book[0] ? book[0].book_img : null);
 
@@ -100,13 +105,44 @@ export async function updateBook(req, res) {
     price = price === "" ? null : Number(price);
     author = Number(author);
 
-    await updateBookInDb(bookId,bookName, description, bookImg, publicationDate, price, author);
+    await updateBookInDb(bookId, bookName, description, bookImg, publicationDate, price, author);
     await updateBookGenreInDb(bookId, genres);
-    res.redirect("/");
+    return res.status(200).json({redirectTo: "/"});
 }
 
-export async function deleteBook(req, res){
+export async function confirmUpdateBook(req, res) {
     const {bookId} = req.params;
+    const {confirmPassword} = req.body;
+
+    if (confirmPassword.trim() !== process.env.ADMIN_PASSWORD) {
+        return res.status(401).json({message: "Password incorrect"});
+    }
+
+    return res.status(200).json({
+        redirectTo: `/update/${bookId}`
+    });
+}
+
+export async function deleteBook(req, res) {
+    const {bookId} = req.params;
+    const {confirmPassword} = req.body;
+
+    if (!confirmPassword) {
+        return res.status(400).json({
+            message: "Password is required"
+        });
+    }
+
+    if (confirmPassword.trim() !== process.env.ADMIN_PASSWORD) {
+        return res.status(401).json({
+            message: "Password incorrect!"
+        });
+    }
+
     await deleteBookFromDb(bookId);
-    res.redirect("/");
+
+    return res.status(200).json({
+        message: "Author deleted",
+        redirectTo: "/"
+    });
 }

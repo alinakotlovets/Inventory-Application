@@ -1,10 +1,12 @@
 <html lang="en">
 <head>
     <title>Book Inventory</title>
+    <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
 <%- include("navbar") %>
-<form action="/update/<%= bookId %>" method="post" enctype="multipart/form-data">
+<%- include("formConfirmUpdateAndDelete") %>
+<form id="editBookForm">
     <label for="bookName">Book name</label>
     <input type="text" name="bookName" value="<%= bookName %>" id="bookName" required>
     <label for="description">Book description</label>
@@ -17,7 +19,7 @@
     <label for="publicationDate">Publication date</label>
     <input type="date" id="publicationDate" value="<%= bookPublication %>" name="publicationDate">
     <label for="price">Price:</label>
-    <input type="number" id="price" value="<%= bookPrice%>" name="price">
+    <input type="number" id="price" value="<%= bookPrice %>" name="price">
     <label for="author">Author:</label>
     <select name="author" id="author">
         <% authors.forEach(author => { %>
@@ -36,7 +38,8 @@
             </option>
         <% }) %>
     </select>
-    <button type="submit"> Submit</button>
+    <button id="edit-book-submit" data-genre-id="<%= bookId %>" type="button"> Submit</button>
 </form>
 </body>
+<script src="/js/confirmForm.js"></script>
 </html>

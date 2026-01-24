@@ -1,13 +1,16 @@
 <html lang="en">
 <head>
     <title>Book Inventory</title>
+    <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
 <%- include("navbar") %>
-<form action="/genres/update/<%= genreId %>" method="post">
+<%- include("formConfirmUpdateAndDelete") %>
+<form>
     <label for="genreName">Genre</label>
     <input type="text" name="genreName" value="<%= genreName %>" id="genreName" required>
-    <button type="submit">Submit</button>
+    <button type="button" id="edit-genre-submit" data-genre-id="<%= genreId %>">Submit</button>
 </form>
 </body>
+<script src="/js/confirmForm.js"></script>
 </html>
