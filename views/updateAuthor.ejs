@@ -1,19 +1,28 @@
 <html lang="en">
 <head>
-    <title>Book Inventory</title>
+    <title>Book Inventory Update Author</title>
     <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
 <%- include("component/navbar.ejs") %>
 <%- include("component/formConfirmUpdateAndDelete.ejs") %>
-<form>
-    <label for="firstName">First name</label>
-    <input type="text" name="firstName" value="<%= authorFirstName %>" id="firstName" required>
-    <label for="lastName">First name</label>
-    <input type="text" id="lastName" value="<%= authorLastName %>" name="lastName" required>
-    <p class="validation-error-messages"></p>
-    <button type="button" id="edit-author-submit" data-author-id="<%= authorId %>">Submit</button>
-</form>
+<div class="overlay"></div>
+<div class="container">
+    <div class="content-form-box">
+        <form class="add-update-form">
+            <label for="firstName">First name:</label>
+            <input type="text" name="firstName" value="<%= authorFirstName %>" id="firstName" required>
+            <label for="lastName">First name:</label>
+            <input type="text" id="lastName" value="<%= authorLastName %>" name="lastName" required>
+            <p class="validation-error-messages"></p>
+            <div class="flex-center-box">
+                <button class="submit-form-btn" type="button" id="edit-author-submit" data-author-id="<%= authorId %>">
+                    Submit
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
 </body>
 <script src="/js/confirmForm.js"></script>
 </html>

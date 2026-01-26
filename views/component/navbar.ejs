@@ -1,13 +1,21 @@
 <nav>
-    <ul>
-        <li>
-            <a href="/">Books</a>
-        </li>
-        <li>
-            <a href="/genres">Genres</a>
-        </li>
-        <li>
-            <a href="/authors">Authors</a>
-        </li>
-    </ul>
+    <div class="container">
+        <div class="navbar">
+            <ul class="navbar-link-list">
+                <li><a class="navbar-link" href="/">Books</a></li>
+                <li><a class="navbar-link" href="/genres">Genres</a></li>
+                <li><a class="navbar-link" href="/authors">Authors</a></li>
+            </ul>
+            <form class="search-form" id="search-form">
+                <input class="search-input" type="text" id="search-input"
+                       placeholder="Search for a book by book name or author"/>
+                <button class="search-form-btn" type="submit">
+                    <img src="/images/other/search.png" alt="search icon" width="20" height="20">
+                </button>
+            </form>
+        </div>
+    </div>
 </nav>
+<div id="search-results"></div>
+
+<script src="/js/search.js"></script>

@@ -18,7 +18,7 @@ export const bookValidation = [
 
     body("description")
         .optional({checkFalsy: true})
-        .isLength({max: 1000}).withMessage("Description can have max 1000 characters"),
+        .isLength({max: 60}).withMessage("Description can have max 60 characters"),
 
     body("publicationDate")
         .optional({checkFalsy: true})

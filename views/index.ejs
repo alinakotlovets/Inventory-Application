@@ -1,4 +1,4 @@
-<html>
+<html lang="en">
 <head>
     <title>Book Inventory</title>
     <link rel="stylesheet" href="/css/styles.css">
@@ -6,11 +6,18 @@
 <body>
 <%- include("component/navbar.ejs") %>
 <%- include("component/formConfirmUpdateAndDelete.ejs") %>
-<ul id="books-list">
-    <% books.forEach((book) => { %>
-        <%- include('component/book.ejs', {book: book}); %>
-    <% }); %>
-</ul>
+<div class="overlay"></div>
+<div class="container">
+    <div class="add-new-text-btn-box">
+        <h2>Add new genre</h2>
+        <a class="add-new-btn" href="/add">+</a>
+    </div>
+    <ul class="book-list" id="books-list">
+        <% books.forEach((book) => { %>
+            <%- include('component/book.ejs', {book: book}); %>
+        <% }); %>
+    </ul>
+</div>
 </body>
 <script src="/js/confirmForm.js"></script>
 </html>

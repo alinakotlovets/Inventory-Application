@@ -9,6 +9,7 @@ const confirmForm = document.querySelector(".confirm-form");
 const confirmFormLabel = document.querySelector(".confirm-form-label");
 const confirmFormCancelBtn = document.querySelector(".confirm-form-cancel-btn");
 const errorMessage = document.querySelector(".confirm-form-error-messages");
+const overlay = document.querySelector(".overlay");
 
 
 let pendingFormData = null;
@@ -21,7 +22,8 @@ if (authorsList) {
         const authorId = deleteBtn.dataset.authorId;
         confirmFormLabel.innerHTML = 'Write password for confirm that you have permission for deleting content. Be aware that deleting author would also delete all books of this author';
         confirmForm.action = `/authors/delete/${authorId}`;
-        confirmForm.style.display = "block";
+        confirmForm.classList.add("active");
+        overlay.classList.add("overlay-active");
     });
 }
 
@@ -33,7 +35,8 @@ if (genresList) {
         const genreId = deleteBtn.dataset.genreId;
         confirmFormLabel.innerHTML = 'Write password for confirm that you have permission for deleting content. Be aware that deleting genre would remove it from all books, but if some books has only this genre it will delete this books.';
         confirmForm.action = `/genres/delete/${genreId}`;
-        confirmForm.style.display = "block";
+        confirmForm.classList.add("active");
+        overlay.classList.add("overlay-active");
     })
 }
 
@@ -58,7 +61,8 @@ if (submitEditGenreBtn) {
         confirmFormLabel.innerHTML = 'Write password for confirm that you have permission for updating content.';
         confirmForm.action = `/genres/update/${genreId}`;
         document.querySelector(".validation-error-messages").textContent = "";
-        confirmForm.style.display = "block";
+        confirmForm.classList.add("active");
+        overlay.classList.add("overlay-active");
     });
 }
 
@@ -85,7 +89,8 @@ if (submitEditAuthorBtn) {
         confirmFormLabel.innerHTML = 'Write password for confirm that you have permission for updating content.';
         confirmForm.action = `/authors/update/${authorId}/`;
         document.querySelector(".validation-error-messages").textContent = "";
-        confirmForm.style.display = "block";
+        confirmForm.classList.add("active");
+        overlay.classList.add("overlay-active");
     })
 }
 
@@ -97,7 +102,8 @@ if (booksList) {
         const bookId = deleteBtn.dataset.bookId;
         confirmFormLabel.innerHTML = 'Write password for confirm that you have permission for deleting content.';
         confirmForm.action = `/delete/${bookId}`;
-        confirmForm.style.display = "block";
+        confirmForm.classList.add("active");
+        overlay.classList.add("overlay-active");
     })
 
 }
@@ -127,7 +133,8 @@ if (submitEditBookBtn && editBookForm) {
         confirmFormLabel.innerHTML = "Write password for confirm that you have permission for updating content.";
         confirmForm.action = `/update/${bookId}`;
         document.querySelector(".validation-error-messages").textContent = "";
-        confirmForm.style.display = "block";
+        confirmForm.classList.add("active");
+        overlay.classList.add("overlay-active");
     });
 }
 
@@ -137,8 +144,8 @@ confirmFormCancelBtn.addEventListener("click", (e) => {
     confirmForm.action = "";
     errorMessage.textContent = "";
     document.getElementById("confirmPassword").value = "";
-    confirmForm.style.display = "none";
-
+    confirmForm.classList.remove("active");
+    overlay.classList.remove("overlay-active");
 })
 
 

@@ -1,20 +1,29 @@
-<html>
+<html lang="en">
 <head>
-    <title>Book Inventory</title>
+    <title>Book Inventory Genres</title>
     <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
 <%- include("component/navbar.ejs") %>
 <%- include("component/formConfirmUpdateAndDelete.ejs") %>
-<ul id="genres-list">
-    <% genres.forEach((genre) => { %>
-        <li>
-            <h2><%= genre.genre_name %></h2>
-            <a href="/genres/update/<%= genre.genre_id %>">Update</a>
-            <button class="delete-genre-btn" data-genre-id="<%= genre.genre_id %>">Delete</button>
-        </li>
-    <% }); %>
-</ul>
+<div class="overlay"></div>
+<div class="container">
+    <div class="add-new-text-btn-box">
+        <h2>Add new genre</h2>
+        <a class="add-new-btn" href="/genres/add">+</a>
+    </div>
+    <ul class="genres-list" id="genres-list">
+        <% genres.forEach((genre) => { %>
+            <li class="genres-list-item">
+                <h2><%= genre.genre_name %></h2>
+                <div class="update-delete-btn-box">
+                    <a class="update-btn" href="/genres/update/<%= genre.genre_id %>">Update</a>
+                    <button class="delete-genre-btn delete-btn" data-genre-id="<%= genre.genre_id %>">Delete</button>
+                </div>
+            </li>
+        <% }); %>
+    </ul>
+</div>
 </body>
 <script src="/js/confirmForm.js"></script>
 </html>

@@ -1,14 +1,21 @@
 <html lang="en">
 <head>
-    <title>Book Inventory</title>
+    <title>Book Inventory Add Genre</title>
+    <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
 <%- include("component/navbar.ejs") %>
-<form action="/genres/add" method="post">
-    <label for="genreName">Genre</label>
-    <%- include("component/errors.ejs") %>
-    <input type="text" name="genreName" id="genreName" value="<%= oldInput %>" required>
-    <button type="submit">Submit</button>
-</form>
+<div class="container">
+    <div class="content-form-box">
+        <form class="add-update-form" action="/genres/add" method="post">
+            <label for="genreName">Genre:</label>
+            <%- include("component/errors.ejs") %>
+            <input type="text" name="genreName" id="genreName" value="<%= oldInput %>" required>
+            <div class="flex-center-box">
+                <button class="submit-form-btn" type="submit">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>
 </body>
 </html>

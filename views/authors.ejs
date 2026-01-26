@@ -1,20 +1,30 @@
 <html>
 <head>
-    <title>Book Inventory</title>
+    <title>Book Inventory Authors</title>
     <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
 <%- include("component/navbar.ejs") %>
 <%- include("component/formConfirmUpdateAndDelete.ejs") %>
-<ul id="authors-list">
-    <% authors.forEach((author) => { %>
-        <li><h2><%= author.author_first_name %> <%= author.author_last_name %></h2>
-            <a href="/authors/update/<%= author.author_id %>">Update</a>
-            <button class="delete-author-btn" data-author-id="<%= author.author_id %>">Delete</button>
-        </li>
-    <% }) %>
-</ul>
-
+<div class="overlay"></div>
+<div class="container">
+    <div class="add-new-text-btn-box">
+        <h2>Add new genre</h2>
+        <a class="add-new-btn" href="/authors/add">+</a>
+    </div>
+    <ul class="authors-list" id="authors-list">
+        <% authors.forEach((author) => { %>
+            <li class="authors-list-item"><h2><%= author.author_first_name %> <%= author.author_last_name %></h2>
+                <div class="update-delete-btn-box">
+                    <a class="update-btn" href="/authors/update/<%= author.author_id %>">Update</a>
+                    <button class="delete-author-btn delete-btn" data-author-id="<%= author.author_id %>">
+                        Delete
+                    </button>
+                </div>
+            </li>
+        <% }) %>
+    </ul>
+</div>
 </body>
 <script src="/js/confirmForm.js"></script>
 </html>
