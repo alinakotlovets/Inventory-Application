@@ -2,8 +2,10 @@
 <head>
     <title>Book Inventory</title>
     <link rel="stylesheet" href="/css/styles.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </head>
 <body>
+<%- include("component/mobileMenu.ejs") %>
 <%- include("component/navbar.ejs") %>
 <%- include("component/formConfirmUpdateAndDelete.ejs") %>
 <div class="overlay"></div>
@@ -13,9 +15,14 @@
         <a class="add-new-btn" href="/add">+</a>
     </div>
     <ul class="book-list" id="books-list">
-        <% books.forEach((book) => { %>
-            <%- include('component/book.ejs', {book: book}); %>
-        <% }); %>
+        <% if(books.length > 0)  { %>
+            <% books.forEach((book) => { %>
+                <%- include('component/book.ejs', {book: book}); %>
+            <% }) %>
+        <% } %>
+        <% if(books.length === 0) { %>
+            <h3 class="flex-center">No books yet</h3>
+        <% } %>
     </ul>
 </div>
 </body>

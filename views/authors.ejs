@@ -1,9 +1,11 @@
-<html>
+<html lang="en">
 <head>
     <title>Book Inventory Authors</title>
     <link rel="stylesheet" href="/css/styles.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </head>
 <body>
+<%- include("component/mobileMenu.ejs") %>
 <%- include("component/navbar.ejs") %>
 <%- include("component/formConfirmUpdateAndDelete.ejs") %>
 <div class="overlay"></div>
@@ -13,16 +15,21 @@
         <a class="add-new-btn" href="/authors/add">+</a>
     </div>
     <ul class="authors-list" id="authors-list">
-        <% authors.forEach((author) => { %>
-            <li class="authors-list-item"><h2><%= author.author_first_name %> <%= author.author_last_name %></h2>
-                <div class="update-delete-btn-box">
-                    <a class="update-btn" href="/authors/update/<%= author.author_id %>">Update</a>
-                    <button class="delete-author-btn delete-btn" data-author-id="<%= author.author_id %>">
-                        Delete
-                    </button>
-                </div>
-            </li>
-        <% }) %>
+        <% if(authors.length > 0) { %>
+            <% authors.forEach((author) => { %>
+                <li class="authors-list-item"><h2><%= author.author_first_name %> <%= author.author_last_name %></h2>
+                    <div class="update-delete-btn-box">
+                        <a class="update-btn" href="/authors/update/<%= author.author_id %>">Update</a>
+                        <button class="delete-author-btn delete-btn" data-author-id="<%= author.author_id %>">
+                            Delete
+                        </button>
+                    </div>
+                </li>
+            <% }) %>
+        <% } %>
+        <% if(authors.length === 0 ) { %>
+            <h3 class="flex-center">No authors yet</h3>
+        <% } %>
     </ul>
 </div>
 </body>

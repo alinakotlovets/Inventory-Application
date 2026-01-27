@@ -2,8 +2,10 @@
 <head>
     <title>Book Inventory Genres</title>
     <link rel="stylesheet" href="/css/styles.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </head>
 <body>
+<%- include("component/mobileMenu.ejs") %>
 <%- include("component/navbar.ejs") %>
 <%- include("component/formConfirmUpdateAndDelete.ejs") %>
 <div class="overlay"></div>
@@ -13,15 +15,21 @@
         <a class="add-new-btn" href="/genres/add">+</a>
     </div>
     <ul class="genres-list" id="genres-list">
-        <% genres.forEach((genre) => { %>
-            <li class="genres-list-item">
-                <h2><%= genre.genre_name %></h2>
-                <div class="update-delete-btn-box">
-                    <a class="update-btn" href="/genres/update/<%= genre.genre_id %>">Update</a>
-                    <button class="delete-genre-btn delete-btn" data-genre-id="<%= genre.genre_id %>">Delete</button>
-                </div>
-            </li>
-        <% }); %>
+        <% if(genres.length > 0) { %>
+            <% genres.forEach((genre) => { %>
+                <li class="genres-list-item">
+                    <h2><%= genre.genre_name %></h2>
+                    <div class="update-delete-btn-box">
+                        <a class="update-btn" href="/genres/update/<%= genre.genre_id %>">Update</a>
+                        <button class="delete-genre-btn delete-btn" data-genre-id="<%= genre.genre_id %>">Delete
+                        </button>
+                    </div>
+                </li>
+            <% }) %>
+        <% } %>
+        <% if(genres.length === 0) { %>
+            <h3 class="flex-center">No genres yet</h3>
+        <% } %>
     </ul>
 </div>
 </body>
