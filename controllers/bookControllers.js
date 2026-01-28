@@ -9,6 +9,7 @@ import {
     deleteBookFromDb
 } from "../db/queries.js";
 import {body, validationResult, matchedData} from "express-validator";
+import cloudinary from "../middleware/cloudinary.js";
 
 export const bookValidation = [
     body("bookName")
@@ -106,7 +107,16 @@ export async function addBook(req, res) {
     publicationDate = publicationDate === "" ? null : publicationDate;
     price = price == null || price === "" ? null : Number(price);
     author = Number(author);
-    const bookImg = req.file ? '/images/books/' + req.file.filename : null;
+    let bookImg = null;
+    if (req.file) {
+        const result = await cloudinary.uploader.upload(
+            `data:${req.file.mimetype};base64,${req.file.buffer.toString("base64")}`,
+            {
+                folder: "books"
+            }
+        );
+        bookImg = result.secure_url;
+    }
     await addBookToBd(bookName, description, bookImg, publicationDate, price, author, genres);
 
     res.redirect("/");
@@ -152,10 +162,18 @@ export async function updateBook(req, res) {
     if (confirmPassword.trim() !== process.env.ADMIN_PASSWORD) {
         return res.status(401).json({message: "Password incorrect"});
     }
-
     const book = await getBookDataById(bookId);
-    let bookImg = req.file ? '/images/books/' + req.file.filename : (book[0] ? book[0].book_img : null);
+    let bookImg = book[0] ? book[0].book_img : null;
 
+    if (req.file) {
+        const result = await cloudinary.uploader.upload(
+            `data:${req.file.mimetype};base64,${req.file.buffer.toString("base64")}`,
+            {
+                folder: "books"
+            }
+        );
+        bookImg = result.secure_url;
+    }
 
     description = description === "" ? null : description;
     publicationDate = publicationDate === "" ? null : publicationDate;
